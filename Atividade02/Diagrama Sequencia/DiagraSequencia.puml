@@ -1,0 +1,41 @@
+@startuml LoanSequenceDiagram
+actor Aluno as aluno
+participant "Sistema" as sistema
+participant "Banco de\nDados" as bd
+participant "Bibliotecário" as biblio
+
+aluno -> sistema: Solicitar empréstimo
+activate sistema
+
+sistema -> bd: Consultar empréstimos do aluno
+activate bd
+bd --> sistema: Retornar quantidade de empréstimos
+deactivate bd
+
+alt Limite não atingido (<= 5)
+  sistema -> bd: Consultar disponibilidade do livro
+  activate bd
+  bd --> sistema: Retornar status do livro
+  deactivate bd
+  
+  alt Livro disponível
+    sistema -> biblio: Solicitar aprovação
+    activate biblio
+    biblio -> sistema: Aprovar empréstimo
+    deactivate biblio
+    
+    sistema -> bd: Registrar novo empréstimo
+    activate bd
+    bd --> sistema: Confirmação de registro
+    deactivate bd
+    
+    sistema -> aluno: Confirmar empréstimo
+  else Livro indisponível
+    sistema -> aluno: Notificar indisponibilidade
+  end
+else Limite atingido (> 5)
+  sistema -> aluno: Negar empréstimo (limite atingido)
+end
+
+deactivate sistema
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Usuario {
+  - id: int
+  - nome: string
+}
+
+class "Aluno / Professor" as AP
+class Bibliotecario
+class Administrador
+
+Usuario <|-- AP
+Usuario <|-- Bibliotecario
+Usuario <|-- Administrador
+
+class Livro {
+  - id: int
+  + estaDisponivel(): boolean
+}
+
+class Emprestimo {
+  - id: int
+  - dataInicio: Date
+  - dataFim: Date
+  - renovado: boolean
+  - devolvido: boolean
+  + calcularMulta(): float
+}
+
+class Relatorio {
+  + gerarRelatorioEmPDF(): void
+}
+
+
+Usuario "1" --> "0..*" Emprestimo
+Livro "1" --> "0..*" Emprestimo
+Administrador --> Relatorio
+@enduml

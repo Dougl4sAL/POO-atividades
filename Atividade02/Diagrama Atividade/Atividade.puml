@@ -1,0 +1,18 @@
+@startuml RenewalActivityDiagram
+start
+:Aluno solicita renovação;
+if (Empréstimo já foi renovado?) then (Sim)
+  :Negar renovação;
+  stop
+else (Não)
+  if (Existem reservas para o livro?) then (Sim)
+    :Negar renovação;
+    stop
+  else (Não)
+    :Aprovar renovação;
+    :Atualizar data de devolução;
+    :Marcar empréstimo como renovado;
+  endif
+endif
+stop
+@enduml

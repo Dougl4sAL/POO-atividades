@@ -1,0 +1,30 @@
+@startuml UseCaseDiagram
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Aluno / Professor" as AP
+actor Bibliotecário
+actor Administrador
+
+rectangle "Sistema Biblioteca" {
+  AP -- (Buscar Livros)
+  AP -- (Reservar Livro)
+  AP -- (Renovar Empréstimo)
+  
+  Bibliotecário -- (Aprovar Empréstimo)
+  Bibliotecário -- (Registrar Devolução)
+  
+  Administrador -- (Gerenciar Cadastros)
+  Administrador -- (Excluir Registros)
+  Administrador -- (Gerar Relatórios)
+  Administrador -- (Bloquear Usuários)
+
+  (Registrar Devolução) -- (Aba de Multas)
+  (Bloquear Usuários) -- (Aba de Multas)
+  
+  (Reservar Livro) .> (Verificar Reservas) : extend
+  (Renovar Empréstimo) .> (Verificar Reservas) : includ
+  (Aprovar Empréstimo) .> (Verificar Limite Livros) : extends
+}
+
+@enduml

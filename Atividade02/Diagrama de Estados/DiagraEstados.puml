@@ -1,0 +1,17 @@
+@startuml BookStateDiagram
+[*] --> Disponível
+
+state Disponível : Livro pode ser\nemprestado ou reservado
+
+Disponível --> Emprestado : Empréstimo\naprovado
+Disponível --> Reservado : Reserva\nregistrada
+
+state Emprestado : Livro está com\num usuário
+Emprestado --> Disponível : Devolução
+Emprestado --> Reservado : Devolução com\nreserva existente
+
+state Reservado : Livro aguarda\nretirada
+Reservado --> Emprestado : Retirada\naprovada
+Reservado --> Disponível : Cancelamento\nou expiração
+
+@enduml
